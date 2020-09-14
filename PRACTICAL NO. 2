@@ -76,5 +76,55 @@ systemctl --type=service
 
 
 
+E. Change to static ip address
+1. To setup static IP address in Debian
+$ nano /etc/network/interfaces
+Output:
+auto eth0
+iface eth0 inet dhcp 
 
+Change it so it looks like this:
+auto eth0
+iface eth0 inet static 
+  address 192.168.0.100
+  netmask 255.255.255.0
+  gateway 192.168.0.1
+  dns-nameservers 4.4.4.4
+  dns-nameservers 8.8.8.8
+  
+2. Save the file and then edit /etc/resolv.conf like this:
+# nano /etc/resolv.conf
+nameserver 8.8.8.8 # Replace with your nameserver ip
+nameserver 4.4.4.4 # Replace with your nameserver ip
+3. Restart the networking on your system with:
+$ /etc/init.d/network restart  [On SysVinit]
+$ systemctl restart network    [On SystemD]
 
+F.Disable ipv6 
+
+to disable the protocol on a Debian-based machine.
+
+1. Open a terminal window.
+
+2. Issue the command sudo nano /etc/sysctl.conf
+
+3. Add the following at the bottom of the file:
+
+net.ipv6.conf.all.disable_ipv6 = 1
+
+net.ipv6.conf.default.disable_ipv6 = 1
+
+net.ipv6.conf.lo.disable_ipv6 = 1
+
+G.Sudo Setting
+] Sudo Setting
+ It is mainly used for provide commands execution right
+for any user or group.
+Only root user has execution right for all
+commands .
+But normal user have limited commands execution rights
+
+To edit sudo configuration file use:
+  $ visudo
+The above command will open /etc/sudoers file in an editor. 
+This file is the main configuration file for sudo settings.
