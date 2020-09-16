@@ -3,3 +3,64 @@
 Aim: 
 SSH server:password Authentication configure SSH 
 server to manage the server from remote computer,SSH client:(Ubuntu and window)
+
+
+SSH (Secure Socket Shell):
+SSH (Secure Shell) protocol, software, and related information. SSH is a software package that enables secure 
+system administration and file transfers over insecure networks. It  is a protocol which allow to connect 
+securely to a remote computer or a server by using a text-based interface. 
+
+• 1.To enable SSH password authentication, we must SSH in as root to edit this file:
+
+/etc/ssh/sshd_config
+
+• 2.Then, change the line
+PasswordAuthentication no
+to
+PasswordAuthentication yes
+
+• 3.After making that change, restart the SSH service by running the following command as root:
+
+sudo service ssh restart
+
+To check if the client is available on your Linux-based system:
+ Type  ssh in terminal
+
+username@host:~$ ssh
+
+Run the following command to install the OpenSSH client on your computer:
+
+sudo apt-get install openssh-client
+
+Type in your superuser password when asked.click on Enter to complete the installation.
+you will need to install the OpenSSH server. Leave the terminal open and:
+
+1] Run the following command to install the SSH server:
+sudo apt-get install openssh-server ii.
+Enter and Y to allow the installation to continue after the disk space prompt.
+The required support files will be installed, and then you can check if the SSH server is running on the machine by typing this command:
+sudo service ssh status
+
+2] Now edit the SSH daemon configuration file, for example, you can change the default port for SSH connections.
+sudo nano /etc/ssh/sshd_config
+
+3] The configuration file will open in the editor of your choice. In this case, we used Nano.
+If you need to install Nano, run this command:
+sudo apt-get install nano
+
+4] We need to restart SSH service every time we make any changes to the sshd_config file:
+sudo service ssh restart.
+
+you can establish a secure remote connection with your servers.
+
+To do so:
+Open the SSH terminal on your machine and run the following command
+
+1.ssh your_username@host_ip_address
+
+If the username on  machine matches the one on the server type:
+
+2.ssh host_ip_address
+
+3.Type in your password and enter.
+
