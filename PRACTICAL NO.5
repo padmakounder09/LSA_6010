@@ -1,1 +1,72 @@
-Aim: 
+Aim: install Samba to share folders or files between windows and linux 
+
+
+Samba server
+Samba is an open-source software suite that runs on Unix/Linux based platforms but is able to communicate with Windows clients like a native application.
+
+Step1: Installtion of  samba 
+
+sudo apt update s
+
+sudo apt install samba
+
+Command to  check whether it is installed:
+
+whereis samba
+
+Step2: configure  samba server 
+
+mkdir /home/<username>/sambashare/
+
+The command above creates a new folder sambashare in our home directory which we will share later.
+
+The configuration file for Samba is located at 
+
+/etc/samba/smb.conf 
+
+To add the new directory as a share, we edit the file by running:
+
+sudo nano /etc/samba/smb.conf
+
+At the bottom of the file, add the following lines:
+
+[sharedfolder] comment = secured shared folder 
+path = /srv/samba/securedfolder 
+Valid users = @selected 
+guest ok = no 
+writable = yes 
+browsable = yes
+
+
+Step 3:Restart smbd service 
+
+sudo systemctl restart smbd.service nmbd.service
+
+Update the firewall rules to allow Samba traffic:
+
+sudo ufw allow samba
+
+Step 4: Access Samba shared files 
+
+Now we need to access what we’ve shared. We can use the smbclient utility to access Windows shared files. We can list the shared files like this:
+$ smbclient -L localhost -U%  
+
+Step 5: Creating Samba users 
+
+To create a samba entry for an existing system user, use the pdbedit command:
+$ pdbedit -a kali
+The new user will be created in the Samba default user database which is /var/lib/samba/private/passdb.tdb file.
+With a Samba user created, we can make the shares available only to authenticated users,
+This user can access his resources on Samba server using smbclient like this:
+$ smbclient -U kali -L //192.168.1.3
+Restart now
+$sudo systemctl restart smbd
+$sudo ufw allow from 192.168.1.3/24 to any samba
+Adding rule
+Sudo ufw reload
+
+
+
+
+
+
